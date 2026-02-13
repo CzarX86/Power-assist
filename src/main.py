@@ -52,12 +52,14 @@ async def run_server():
     print(f"Server running at http://{settings.api_host}:{settings.api_port}")
     print(f"API documentation: http://{settings.api_host}:{settings.api_port}/docs")
     
-    uvicorn.run(
+    config = uvicorn.Config(
         app,
         host=settings.api_host,
         port=settings.api_port,
         reload=settings.debug,
     )
+    server = uvicorn.Server(config)
+    await server.serve()
 
 
 async def demo_agent():
